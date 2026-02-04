@@ -1,0 +1,31 @@
+services:
+  grafana:
+    enabled: true
+    url: "http://localhost:3000"
+    logo: "https://images.icon-icons.com/2699/PNG/512/grafana_logo_icon_171048.png"
+    display_name: "Grafana"
+    tags: ["monitoring", "dashboard"]
+  prometheus:
+    enabled: true
+    url: "http://localhost:9090"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Prometheus_software_logo.svg/1280px-Prometheus_software_logo.svg.png"
+    display_name: "Prometheus"
+    tags: ["monitoring", "metrics"]
+  jellyfin:
+    enabled: false
+    url: "http://localhost:8096"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Jellyfin_-_icon-transparent.svg/960px-Jellyfin_-_icon-transparent.svg.png"
+    display_name: "Jellyfin"
+    tags: ["media", "streaming"]
+  proxmox:
+    enabled: true
+    url: "https://localhost:8006"
+    logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/proxmox.webp"
+    display_name: "Proxmox VE"
+    tags: ["virtualization", "hypervisor"]
+  jellyfin-2:
+    enabled: false
+    url: "http://localhost:8096"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Jellyfin_-_icon-transparent.svg/960px-Jellyfin_-_icon-transparent.svg.png"
+    display_name: "Jellyfin"
+    tags: ["media", "streaming"]
