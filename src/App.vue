@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import ServiceCard from './components/ServiceCard.vue';
 import yaml from 'js-yaml';
 
 const services = ref([]);
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     const response = await fetch('/config/services.yaml');
     const yamlText = await response.text();
@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-6">
+  <div class="min-h-screen dark:bg-gray-900 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
     <h1 class="text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500 mb-12 drop-shadow-lg">
       Mon Homelab Dashboard
     </h1>
