@@ -4,6 +4,7 @@ defineProps({
   url: String,
   logo: String,
   tags: Array,
+  status: String,
 });
 </script>
 
@@ -18,7 +19,18 @@ defineProps({
       <div class="w-20 h-20 mb-4 flex items-center justify-center rounded-full bg-gray-700 p-2">
         <img :src="logo" alt="Logo" class="max-h-full max-w-full object-contain" />
       </div>
-      <h3 class="text-2xl font-bold text-white mb-2 text-center">{{ name }}</h3>
+      <div class="flex items-center mb-2 justify-center">
+        <span
+          v-if="status == 'ok'"
+          class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"
+        ></span>
+        <span
+          v-else-if="status == 'error'"
+          class="w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse"
+        ></span>
+        <h3 class="text-2xl font-bold text-white mb-2 text-center">{{ name }}</h3>
+      </div>
+      
     </div>
     <div class="flex flex-wrap justify-center gap-2 mt-4">
       <span
