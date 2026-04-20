@@ -23,3 +23,9 @@ services:
     logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/proxmox.webp"
     display_name: "Proxmox VE"
     tags: ["virtualization", "hypervisor"]
+  - name: homeassistant
+    enabled: true
+    url: "http://192.168.1.5:8123"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/ab/New_Home_Assistant_logo.svg"
+    display_name: "Home Assistant"
+    tags: ["home automation", "smart home"]

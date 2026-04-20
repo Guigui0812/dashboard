@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: Bistrom;
+  src: url("./fonts/BitstromWeraNerdFont-Regular.ttf");
+}
+
+@theme{
+    --font-bistrom: Bistrom, "sand-serif";
+}
