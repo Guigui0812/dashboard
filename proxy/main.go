@@ -2,11 +2,14 @@ package main
 
 import (
 	"crypto/tls"
+	"fmt"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/goccy/go-yaml"
 )
 
 type CacheEntry struct {
@@ -46,7 +49,49 @@ func setCache(url string, status string) {
 	}
 }
 
+type servicesConfig struct {
+	Services []struct {
+		URL string `yaml:"url"`
+	} `yaml:"services"`
+}
+
+func loadAllowedURLs() (map[string]bool, error) {
+	path := os.Getenv("SERVICES_CONFIG")
+	candidates := []string{path, "config/services.yaml", "../config/services.yaml"}
+
+	var data []byte
+	var err error
+	for _, p := range candidates {
+		if p == "" {
+			continue
+		}
+		data, err = os.ReadFile(p)
+		if err == nil {
+			break
+		}
+	}
+	if err != nil {
+		return nil, fmt.Errorf("could not find services.yaml (set SERVICES_CONFIG): %w", err)
+	}
+
+	var cfg servicesConfig
+	if err := yaml.Unmarshal(data, &cfg); err != nil {
+		return nil, fmt.Errorf("could not parse services.yaml: %w", err)
+	}
+
+	allowed := make(map[string]bool, len(cfg.Services))
+	for _, s := range cfg.Services {
+		allowed[s.URL] = true
+	}
+	return allowed, nil
+}
+
 func main() {
+	allowedURLs, err := loadAllowedURLs()
+	if err != nil {
+		panic(err)
+	}
+
 	// Skip TLS verification: dashboard targets often use self-signed certs.
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	r := gin.Default()
@@ -61,6 +106,10 @@ func main() {
 		url := c.Query("url")
 		if url == "" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "URL manquante"})
+			return
+		}
+		if !allowedURLs[url] {
+			c.JSON(http.StatusForbidden, gin.H{"error": "URL non autorisée"})
 			return
 		}
 
