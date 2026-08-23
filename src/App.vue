@@ -4,7 +4,22 @@ import ServiceCard from './components/ServiceCard.vue';
 import { fetchUrlStatus } from './services/serviceChecker.js';
 import { yamlParser } from './services/yamlParser.js';
 
+<<<<<<< Updated upstream
 const yamlFile = '/config/services.yaml'
+=======
+async function fetchUrlStatus(url) {
+  try {
+    const response = await fetch('/proxy?url=' + encodeURIComponent(url), { method: 'GET' });
+    if (!response.ok) {
+      return 'error';
+    }
+    const jsonBody = await response.json();
+    return jsonBody.status === 'ok' ? 'ok' : 'error';
+  } catch (e) {
+    return 'error';
+  }
+}
+>>>>>>> Stashed changes
 
 const services = ref([]);
 onBeforeMount(async () => {

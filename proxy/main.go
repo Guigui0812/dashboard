@@ -148,5 +148,7 @@ func main() {
 			"cached": false,
 		})
 	})
+	// N'écoute que sur localhost : le proxy n'a pas vocation à être joint
+	// depuis l'extérieur du conteneur, seul le frontend (même conteneur) l'appelle.
 	r.Run("localhost:8080")
 }
